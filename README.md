@@ -2,6 +2,10 @@
 
 A self-hosted media and monitoring lab built on Proxmox VE. Jellyfin serves the media library, Seerr handles requests, and Homarr brings playback, downloads, storage, and backup status into one dashboard. Tailscale provides private access from phones and computers.
 
+## Engineering report
+
+Read the [November 2026 engineering report](reports/2026-11-11/README.md) for the architecture, migration history, dashboard improvements, maintenance results, and backup capacity findings. The report includes a six-page PDF and its editable source.
+
 ## Architecture
 
 ```mermaid

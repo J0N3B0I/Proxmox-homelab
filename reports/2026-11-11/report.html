@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Homelab Infrastructure &amp; Operations — November 2026</title>
+  <style>
+    :root { --ink: #182e3b; --muted: #52636b; --line: #d9e0df; --paper: #faf9f5; --teal: #12685f; --pale: #e8f2ed; --amber: #986015; --amber-bg: #fcf2df; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e1e5e4; color: var(--ink); font: 10.5pt/1.5 Arial, Helvetica, sans-serif; }
+    .page { position: relative; width: 210mm; height: 297mm; margin: 9mm auto; padding: 16mm 17mm 19mm; background: var(--paper); overflow: hidden; }
+    .masthead { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 10px; margin-bottom: 26px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 8pt; letter-spacing: .08em; text-transform: uppercase; }
+    .eyebrow { margin: 0 0 12px; color: var(--teal); font-weight: 700; font-size: 8pt; letter-spacing: .12em; text-transform: uppercase; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; letter-spacing: -.035em; line-height: 1.08; }
+    h1 { margin-bottom: 22px; font-size: 47pt; }
+    h2 { font-size: 31pt; margin-bottom: 17px; }
+    h3 { margin-bottom: 8px; font-size: 12pt; line-height: 1.3; }
+    p { margin-bottom: 12px; }
+    .lead { font-size: 13pt; line-height: 1.5; color: var(--muted); }
+    .small { font-size: 8.5pt; color: var(--muted); }
+    .tiny { font-size: 7.8pt; color: var(--muted); }
+    .footer { position: absolute; bottom: 10mm; left: 17mm; right: 17mm; display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid var(--line); color: var(--muted); font-size: 7.8pt; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin: 25px 0; }
+    .metric { border-top: 3px solid var(--teal); padding: 14px 0 0; }
+    .number { display: block; font-size: 32pt; font-weight: 600; letter-spacing: -.05em; line-height: 1.1; }
+    .metric p { margin: 7px 0 0; font-size: 9pt; color: var(--muted); }
+    .card { border: 1px solid var(--line); padding: 19px; background: #fff; }
+    .card .number { margin-bottom: 13px; }
+    .callout { background: var(--pale); border-left: 4px solid var(--teal); padding: 17px 19px; margin: 20px 0; }
+    .callout p:last-child, .card p:last-child { margin-bottom: 0; }
+    .warning { background: var(--amber-bg); border-color: var(--amber); }
+    .warning h3 { color: var(--amber); }
+    .rule { border: 0; border-top: 1px solid var(--line); margin: 22px 0; }
+    table { border-collapse: collapse; width: 100%; margin: 15px 0 20px; font-size: 9pt; }
+    th { text-align: left; font-size: 8pt; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); background: #eef0eb; padding: 10px; }
+    td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    .label { display: inline-block; padding: 3px 8px; background: var(--pale); color: var(--teal); font-size: 8pt; font-weight: 700; border-radius: 3px; }
+    .label.amber { color: var(--amber); background: var(--amber-bg); }
+    .timeline { border-left: 1px solid var(--line); padding-left: 24px; margin: 22px 0; }
+    .event { position: relative; padding-bottom: 19px; }
+    .event::before { content: ''; position: absolute; width: 9px; height: 9px; border-radius: 50%; background: var(--teal); top: 6px; left: -29px; }
+    .event p { margin-bottom: 4px; }
+    .event .date { font-size: 8pt; font-weight: 700; color: var(--teal); margin-bottom: 5px; text-transform: uppercase; letter-spacing: .06em; }
+    .host { margin: 18px 0; border: 1px solid var(--line); padding: 14px; background: white; }
+    .host > h3 { margin-bottom: 14px; }
+    .guest { padding: 13px; background: #f0f4f1; border: 1px solid #cedbd5; }
+    .guest-title { color: var(--teal); font-size: 9pt; font-weight: bold; margin-bottom: 12px; }
+    .nodes { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+    .node { padding: 10px 7px; border: 1px solid var(--line); background: white; font-size: 8.5pt; text-align: center; }
+    .network { text-align: center; padding: 9px; border: 1px solid var(--teal); color: var(--teal); font-size: 9pt; margin-bottom: 9px; }
+    .arrow { text-align: center; color: var(--teal); margin: 6px 0; font-size: 8pt; }
+    .support { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+    .step { display: grid; grid-template-columns: 130px 1fr; gap: 18px; padding: 15px 0; border-bottom: 1px solid var(--line); }
+    .step p { margin: 0; }
+    .step strong { font-size: 9.5pt; }
+    .maintenance .step { padding: 8px 0; }
+    .maintenance .callout { padding: 13px 16px; margin: 16px 0; }
+    .maintenance .rule { margin: 18px 0; }
+    .capacity { background: #fff; border: 1px solid var(--line); padding: 20px; margin: 22px 0; }
+    .capacity .labels { display: flex; justify-content: space-between; align-items: baseline; }
+    .bar { height: 18px; background: #e9ece8; margin: 12px 0; }
+    .bar > span { display: block; height: 100%; width: 37.4%; background: #c4974b; }
+    .cover { padding-top: 18mm; }
+    .cover .masthead { margin-bottom: 40px; }
+    .cover .abstract { max-width: 145mm; margin-bottom: 27px; }
+    .cover .endnote { position: absolute; bottom: 29mm; left: 17mm; right: 17mm; }
+    .cover-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 30px; margin-top: 22px; color: var(--muted); font-size: 9.5pt; }
+    .cover-list div { padding: 9px 0; border-top: 1px solid var(--line); }
+    a { color: var(--teal); text-decoration: none; }
+    ul, ol { padding-left: 20px; margin-top: 8px; }
+    li { margin-bottom: 7px; }
+    @page { size: A4; margin: 0; }
+    @media print { body { background: white; } .page { margin: 0; break-after: page; } .page:last-child { break-after: auto; } }
+    @media screen and (max-width: 820px) { body { overflow-x: auto; } .page { margin: 0 auto 12px; } }
+  </style>
+</head>
+<body>
+  <section class="page cover">
+    <div class="masthead"><span>Infrastructure &amp; operations</span><span>November 2026</span></div>
+    <p class="eyebrow">Proxmox homelab · Engineering report</p>
+    <h1>Homelab<br>Infrastructure<br>&amp; Operations</h1>
+    <p class="lead abstract">Service modernization, private media access, dashboard visibility, and measured storage recovery on a self-hosted Proxmox platform.</p>
+    <div class="metrics">
+      <div class="metric"><span class="number">13</span><p>Docker containers<br>running at inspection</p></div>
+      <div class="metric"><span class="number">9 / 9</span><p>Service endpoints<br>responding to HTTP checks</p></div>
+      <div class="metric"><span class="number">3</span><p>Storage cleanup operations<br>with verified recovery</p></div>
+    </div>
+    <div class="cover-list">
+      <div>Proxmox VE &amp; Docker Compose</div><div>Jellyfin &amp; media services</div>
+      <div>Tailscale &amp; mobile access</div><div>Homarr &amp; operational visibility</div>
+      <div>Migration &amp; legacy retirement</div><div>Storage &amp; backup management</div>
+    </div>
+    <div class="endnote">
+      <span class="label amber">Open operational item</span>
+      <p style="margin-top: 10px; margin-bottom: 13px;">Local guest backups require additional destination capacity. The latest successful job in the inspected history ran on November 9.</p>
+      <p class="small">Reporting date · November 11, 2026, Eastern time<br>Latest availability checks · 11:15 p.m. Eastern time</p>
+    </div>
+    <div class="footer"><span>J0N3B0I / Proxmox-homelab</span><span>01 / 06</span></div>
+  </section>
+
+  <section class="page">
+    <div class="masthead"><span>Platform architecture</span><span>Deployment at inspection</span></div>
+    <p class="eyebrow">Compute, services &amp; access</p>
+    <h2>One host.<br>Defined service roles.</h2>
+    <p>The media applications run in Docker inside an unprivileged Linux container. Wazuh occupies a separate virtual machine on the Proxmox host.</p>
+    <div class="network">Phone or computer → Tailscale → private service access</div>
+    <div class="host">
+      <h3>Proxmox VE host</h3>
+      <div class="guest">
+        <div class="guest-title">Media LXC · 4 cores · 8 GiB RAM</div>
+        <div class="nodes"><div class="node">Homarr dashboard</div><div class="node">Jellyfin playback</div><div class="node">Seerr requests</div></div>
+        <div class="arrow">Library management → download client → shared media filesystem</div>
+        <div class="nodes"><div class="node">Sonarr / Radarr<br>Prowlarr / Bazarr</div><div class="node">qBittorrent<br>Gluetun networking</div><div class="node">Media volume<br>250 GiB allocated</div></div>
+      </div>
+      <div class="support"><div class="node">Wazuh VM<br>4 cores · 8 GiB RAM · 40 GiB disk</div><div class="node">Local guest backup destination<br>Capacity-guarded scheduled jobs</div></div>
+    </div>
+    <table>
+      <thead><tr><th>Service layer</th><th>Deployed components</th></tr></thead>
+      <tbody>
+        <tr><td>Playback &amp; requests</td><td>Jellyfin, Seerr</td></tr>
+        <tr><td>Library management</td><td>Sonarr, Radarr, Prowlarr, Bazarr, Recyclarr</td></tr>
+        <tr><td>Downloads &amp; networking</td><td>qBittorrent, Gluetun</td></tr>
+        <tr><td>Supporting services</td><td>Byparr, Cleanuparr</td></tr>
+        <tr><td>Dashboard &amp; Docker visibility</td><td>Homarr, socket-proxy</td></tr>
+      </tbody>
+    </table>
+    <p class="small">The LXC has a 32 GiB system volume. TUN and render device assignments support private networking and media workloads. Performance validation requires an appropriate playback test.</p>
+    <div class="footer"><span>Architecture &amp; service inventory</span><span>02 / 06</span></div>
+  </section>
+
+  <section class="page">
+    <div class="masthead"><span>Implementation record</span><span>November 8–11, 2026</span></div>
+    <p class="eyebrow">Access, migration &amp; usability</p>
+    <h2>From native services<br>to an integrated stack.</h2>
+    <div class="timeline">
+      <div class="event"><p class="date">Remote access repair</p><h3>TUN passthrough restored Tailscale operation</h3><p>The unprivileged media container lacked the networking device Tailscale needed. Device passthrough and a container stop/start enabled the daemon. Account authorization completed the connection.</p><p class="small">Verification · Tailscale connectivity, Jellyfin health response, and HTTP 200 from the web interface.</p></div>
+      <div class="event"><p class="date">Docker migration</p><h3>Media applications moved into Compose</h3><p>Jellyfin, Radarr, Sonarr, Prowlarr, and qBittorrent moved from native services into Docker. Dedicated application data and a shared media filesystem supported the new layout.</p><p class="small">Recovery provision · The pre-migration Proxmox snapshot was retained.</p></div>
+      <div class="event"><p class="date">Dashboard improvements</p><h3>Homarr became the mobile entry point</h3><p>Quick links and download progress lead the phone layout. Playback, calendar, requests, storage, backup status, Proxmox resources, and Docker state provide operational context.</p><p class="small">Verification · Eight integrations passed connection checks. Desktop and iPhone-sized browser checks passed.</p></div>
+    </div>
+    <div class="grid">
+      <div class="card"><h3>Shared media filesystem</h3><p class="small">Downloads and library imports share a filesystem, supporting hardlinks where configured. Application data uses dedicated directories.</p></div>
+      <div class="card"><h3>Private administration</h3><p class="small">Tailscale provides service access from authorized clients. qBittorrent shares Gluetun's network namespace.</p></div>
+    </div>
+    <div class="callout"><h3>Live operational cards</h3><p class="small">The storage card reads filesystem capacity through Radarr every minute. The backup card reads Proxmox job and archive information every five minutes.</p></div>
+    <div class="footer"><span>Implementation &amp; operational design</span><span>03 / 06</span></div>
+  </section>
+
+  <section class="page maintenance">
+    <div class="masthead"><span>Maintenance outcomes</span><span>Measured filesystem recovery</span></div>
+    <p class="eyebrow">Application retirement &amp; media cleanup</p>
+    <h2>Space recovered.<br>Results verified.</h2>
+    <div class="grid" style="margin-top: 25px;">
+      <div class="card"><p class="eyebrow">Container system filesystem</p><span class="number">1.22 <span style="font-size: 17pt;">GiB</span></span><h3>Retired native installations removed</h3><p>Removed the original application binaries, obsolete service definitions, packages, and unused data directories after reviewing the live Docker mounts.</p><span class="label">13 containers stayed running</span></div>
+      <div class="card"><p class="eyebrow">Media filesystem</p><span class="number">19.32 <span style="font-size: 17pt;">GiB</span></span><h3>Three movies removed across two batches</h3><p>Used Radarr's file deletion and import exclusions, checked remaining records, and refreshed Jellyfin to reconcile the library catalog.</p><span class="label">132.18 GiB free afterward</span></div>
+    </div>
+    <hr class="rule">
+    <h3>Verified removal batches</h3>
+    <p class="small">Initial cleanup · 15.16 GiB recovered. Follow-up removal · 4.17 GiB recovered. The combined figure uses the underlying byte measurements.</p>
+    <div class="step"><strong>Identify</strong><p>Matched the requested entries to their exact records and files. Each media file had one filesystem link.</p></div>
+    <div class="step"><strong>Reconcile copies</strong><p>Checked the active download list and filesystem. No matching download copies remained.</p></div>
+    <div class="step"><strong>Remove &amp; refresh</strong><p>Waited for asynchronous file deletion to finish, then confirmed both entries were absent from Jellyfin.</p></div>
+    <div class="step"><strong>Verify scope</strong><p>The first batch preserved 20 other Radarr records. The follow-up preserved the remaining 19. All nine endpoint checks passed.</p></div>
+    <div class="callout"><h3>Storage accounting</h3><p class="small">These results measure recovery inside separate filesystems. Retained Proxmox snapshots can still reference removed blocks on the storage pool. Physical pool recovery requires its own measurement.</p></div>
+    <div class="footer"><span>Legacy cleanup &amp; user-requested media removal</span><span>04 / 06</span></div>
+  </section>
+
+  <section class="page">
+    <div class="masthead"><span>Backup operations</span><span>Open capacity issue</span></div>
+    <p class="eyebrow">Local guest backup incident</p>
+    <h2>A capacity guard<br>stopped the backup.</h2>
+    <p>The scheduled local guest job targets the media LXC and Wazuh VM. Its preflight guard estimates capacity from allocated guest blocks, adds 25% headroom, and reserves 10 GiB for the host.</p>
+    <div class="capacity">
+      <p class="eyebrow">November 10 incident figures</p>
+      <div class="labels"><strong>63.0 GiB available</strong><strong>168.5 GiB required</strong></div>
+      <div class="bar"><span></span></div>
+      <p class="small" style="margin-bottom: 0;">Available destination capacity covered approximately 37% of the guard's estimated requirement.</p>
+    </div>
+    <table>
+      <thead><tr><th>Scheduled run · Eastern time</th><th>Recorded result</th></tr></thead>
+      <tbody>
+        <tr><td>November 9 · 2:00 a.m.</td><td><span class="label">Successful</span></td></tr>
+        <tr><td>November 10 · 2:00 a.m.</td><td><span class="label amber">Capacity guard refused</span></td></tr>
+        <tr><td>November 11 · 2:00 a.m.</td><td><span class="label amber">Capacity guard refused</span></td></tr>
+      </tbody>
+    </table>
+    <p>The prior successful job passed with an estimate of 50.2 GiB. The inspected logs establish the increase in estimated requirements. They do not identify which individual files caused it.</p>
+    <div class="callout warning"><h3>Next operational action</h3><p>Resolve the destination capacity shortfall, verify a subsequent scheduled guest backup, and record an isolated restore test.</p></div>
+    <div class="grid">
+      <div><h3>Separate capacity checks</h3><p class="small">The media filesystem and local backup destination have distinct limits. Free media space does not establish backup destination capacity.</p></div>
+      <div><h3>Backup coverage</h3><p class="small">Guest archives and media stack configuration snapshots have separate coverage and timestamps. The dashboard exposes guest job and archive status.</p></div>
+    </div>
+    <div class="footer"><span>Backup history &amp; capacity analysis</span><span>05 / 06</span></div>
+  </section>
+
+  <section class="page">
+    <div class="masthead"><span>Validation &amp; follow-up</span><span>November 11 · 11:15 p.m. Eastern</span></div>
+    <p class="eyebrow">Availability snapshot &amp; evidence</p>
+    <h2>Operational checks<br>and remaining work.</h2>
+    <div class="metrics"><div class="metric"><span class="number">13</span><p>Docker containers running</p></div><div class="metric"><span class="number">9 / 9</span><p>Current HTTP checks passed</p></div><div class="metric"><span class="number">8 / 8</span><p>Integrations passed during dashboard work</p></div></div>
+    <table>
+      <thead><tr><th>Workstream</th><th>Recorded verification</th></tr></thead>
+      <tbody>
+        <tr><td>Private access</td><td>Tailscale connectivity and Jellyfin HTTP response after repair</td></tr>
+        <tr><td>Dashboard</td><td>Desktop/mobile rendering, live widgets, and a working Jellyfin destination</td></tr>
+        <tr><td>Legacy retirement</td><td>Docker mount review, service continuity, and system filesystem recovery</td></tr>
+        <tr><td>Media cleanup</td><td>Exact record matching, file deletion, other-record preservation, and catalog refresh</td></tr>
+        <tr><td>Current availability</td><td>HTTP 200 from Homarr, Jellyfin, Seerr, Radarr, Sonarr, Prowlarr, qBittorrent, Bazarr, and Cleanuparr</td></tr>
+        <tr><td>Backup status</td><td>Inspected task history confirms capacity refusals on November 10 and 11</td></tr>
+      </tbody>
+    </table>
+    <h3>Follow-up work</h3>
+    <ol>
+      <li>Restore a successful scheduled backup by resolving destination capacity.</li>
+      <li>Perform an isolated restore test and record the result.</li>
+      <li>Review the retained pre-migration snapshot's recovery value.</li>
+      <li>Continue publishing verified changes and incident outcomes to GitHub.</li>
+    </ol>
+    <p class="small">HTTP checks establish response availability. Off-site playback, transcoding performance, and full backup restoration remain separate validation tasks. Storage figures are point-in-time observations.</p>
+    <hr class="rule">
+    <p class="small">Evidence basis · Recorded maintenance results and fresh container, service, filesystem, and Proxmox task-history checks. Publication uses aggregate results and sanitized architecture details.</p>
+    <p class="small"><a href="https://github.com/J0N3B0I/Proxmox-homelab">Primary homelab documentation ↗</a><br><a href="https://github.com/J0N3B0I/Proxmox-homelab/blob/main/CHANGELOG.md">Maintenance change log ↗</a></p>
+    <div class="footer"><span>Verification, evidence limits &amp; next actions</span><span>06 / 06</span></div>
+  </section>
+</body>
+</html>
