@@ -2,6 +2,14 @@
 
 ## 2026-11-24
 
+### Remaining kernel findings review and targeted lab protections
+
+Reviewed the remaining FIM practice guest's kernel findings against Ubuntu's per-CVE status for the `linux` source package and Noble release. Published the [review and operating limits](https://github.com/J0N3B0I/Wazuh-FIM-Lab/blob/main/docs/kernel-findings-review.md), a per-CVE spreadsheet, and post-reboot validation evidence. Vendor-status reconciliation does not establish individual exploitability for every record.
+
+Blocked normal loading of the unused Xen network backend in the dedicated KVM practice guest, disabled ordinary-user namespace creation, and set kernel pointer restriction to 2. Regenerated the guest's initramfs, restarted only that VM, and verified persistence. The restrictions reduce exposure but do not patch kernel CVEs; future rootless container/sandbox use in this guest requires review.
+
+All three real-time file-change tests passed again in manager and indexer with matching identifiers and hashes. All 13 original media container identities were unchanged, nine endpoint checks ended at HTTP 200, four central Wazuh services were active, and all five positive/negative lab network probes matched policy. The scanner still reported 440 kernel records, including two Critical and 111 High ratings. No findings were suppressed. No unattended updater, recurring monitor, automatic reboot, host/kernel upgrade, or backup configuration change was installed by this follow-up.
+
 ### FIM lab security review and plain-English report
 
 Published a downloadable [plain-English project summary](https://github.com/J0N3B0I/Wazuh-FIM-Lab/blob/main/plain-english-summary.pdf) and [security review](https://github.com/J0N3B0I/Wazuh-FIM-Lab/blob/main/docs/security-review.md).
