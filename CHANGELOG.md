@@ -16,6 +16,14 @@ Published the dedicated [Wazuh Security Monitoring Homelab](https://github.com/J
 
 Read-only inspection verified four active central services, a successful Filebeat output connection test, and green indexer health. The inspection counted 49 alert indices and found no assigned ISM policy on those indices. Retention review and recovery verification remain follow-up work. Proposed detection exercises are identified as future projects.
 
+### Completed file integrity monitoring project
+
+Deployed a dedicated Ubuntu 24.04.5 LTS VM with 2 cores, 2 GiB RAM, and a 20 GiB thin-provisioned disk. A separate bridge, guest firewall, and scoped host forwarding provide Wazuh connectivity with no guest default route. Installed and enrolled a matching 4.14.8 agent and enabled real-time monitoring of a dedicated test directory.
+
+Verified all three controlled file operations in manager alerts and indexed documents: creation rule 554, modification rule 550, and deletion rule 553. Hash values matched, event IDs agreed between manager and indexer, and first indexed observations were 9.76, 10.80, and 16.46 seconds after the respective operations. Targeted network checks passed, all existing media container IDs were preserved, nine application endpoint checks passed, and four central Wazuh services were active.
+
+Published the [project summary and evidence](https://github.com/J0N3B0I/Wazuh-FIM-Lab). The test VM remains available with automatic host-boot startup disabled. Its backup coverage is outside the current job while additional storage is being obtained.
+
 ## 2026-11-11
 
 ### Media storage cleanup

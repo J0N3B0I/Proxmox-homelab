@@ -10,6 +10,10 @@ Read the [November 2026 engineering report](reports/2026-11-11/README.md) for th
 
 The [Wazuh Security Monitoring Homelab](https://github.com/J0N3B0I/Wazuh-Homelab) documents the deployed monitoring architecture, agent collection, alert processing, indexing, investigation, operations, and a verified health snapshot. It includes a roadmap for controlled security exercises.
 
+## Completed security project
+
+The [Wazuh File Integrity Monitoring Lab](https://github.com/J0N3B0I/Wazuh-FIM-Lab) uses a separate Ubuntu VM and an isolated virtual bridge. Creation, modification, and deletion alerts were verified in both the Wazuh manager and indexer. The project includes sanitized evidence, configuration templates, reproduction steps, and an investigation summary.
+
 ## Architecture
 
 ```mermaid
@@ -30,6 +34,7 @@ flowchart LR
             Storage --> Jellyfin
         end
         Wazuh["Wazuh VM"]
+    Lab["Dedicated FIM lab VM"] -.->|Agent events| Wazuh
         Backup["Proxmox guest backups"]
     end
     Homarr -.->|Read backup status| Backup
