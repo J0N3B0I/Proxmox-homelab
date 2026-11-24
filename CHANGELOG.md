@@ -2,6 +2,10 @@
 
 ## 2026-11-24
 
+### Complete plain-English Wazuh process guide
+
+Published a six-page [downloadable process guide](https://github.com/J0N3B0I/Wazuh-FIM-Lab/blob/main/complete-process-guide.pdf) and an editable reading copy. The guide explains the dedicated VM build, restricted networking, Wazuh enrollment, real-time file-change tests, package updates, kernel exposure restrictions, per-CVE vendor review, and post-reboot validation. It distinguishes completed work from remaining findings, future patching, and the backup capacity gap. It records previously verified outcomes rather than claiming a new live security audit. No service configuration changes were required to produce the guide.
+
 ### Remaining kernel findings review and targeted lab protections
 
 Reviewed the remaining FIM practice guest's kernel findings against Ubuntu's per-CVE status for the `linux` source package and Noble release. Published the [review and operating limits](https://github.com/J0N3B0I/Wazuh-FIM-Lab/blob/main/docs/kernel-findings-review.md), a per-CVE spreadsheet, and post-reboot validation evidence. Vendor-status reconciliation does not establish individual exploitability for every record.
