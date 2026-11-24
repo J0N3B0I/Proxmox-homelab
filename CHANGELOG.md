@@ -1,5 +1,15 @@
 # Homelab change log
 
+## 2026-11-24
+
+### Watched movie cleanup
+
+Removed three fully watched movies following an owner-requested storage cleanup. Jellyfin had one active profile. Immediately before deletion, each selected movie was marked played, had no resume position, was not favorited, and was absent from active playback sessions. Each library file had one filesystem link. No matching download jobs or residual download copies were found.
+
+Deleted the selected entries through Radarr with file deletion and import exclusions enabled, waited for directory removal, and refreshed Jellyfin. Verified that the other 16 Radarr records were preserved and Jellyfin's remaining movie count was 13. Available media filesystem space increased by **28.81 GiB**, reaching **151.19 GiB free** at verification.
+
+Homarr, Jellyfin, Radarr, Sonarr, Prowlarr, Seerr, and the download client returned HTTP 200 during post-cleanup checks. Selection used fully watched status. An age-based removal cutoff remains unspecified.
+
 ## 2026-11-11
 
 ### Media storage cleanup
