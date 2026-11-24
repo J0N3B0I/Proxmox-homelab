@@ -10,6 +10,12 @@ Deleted the selected entries through Radarr with file deletion and import exclus
 
 Homarr, Jellyfin, Radarr, Sonarr, Prowlarr, Seerr, and the download client returned HTTP 200 during post-cleanup checks. Selection used fully watched status. An age-based removal cutoff remains unspecified.
 
+### Wazuh deployment documentation
+
+Published the dedicated [Wazuh Security Monitoring Homelab](https://github.com/J0N3B0I/Wazuh-Homelab) repository and linked it from the main project. Documentation covers the actual 4.14.8 deployment, three connected remote agents, local monitoring, Filebeat forwarding, indexing, investigation, and operations.
+
+Read-only inspection verified four active central services, a successful Filebeat output connection test, and green indexer health. The inspection counted 49 alert indices and found no assigned ISM policy on those indices. Retention review and recovery verification remain follow-up work. Proposed detection exercises are identified as future projects.
+
 ## 2026-11-11
 
 ### Media storage cleanup
