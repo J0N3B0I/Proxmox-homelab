@@ -2,6 +2,16 @@
 
 ## 2026-11-24
 
+### FIM lab security review and plain-English report
+
+Published a downloadable [plain-English project summary](https://github.com/J0N3B0I/Wazuh-FIM-Lab/blob/main/plain-english-summary.pdf) and [security review](https://github.com/J0N3B0I/Wazuh-FIM-Lab/blob/main/docs/security-review.md).
+
+Refreshed Ubuntu metadata and upgraded 67 lab packages, installing six new packages. Rebooted only the lab onto kernel `6.8.0-151-generic`, then removed the obsolete kernel packages. Root and password SSH login are disabled. The enrollment socket is stopped and disabled, and its port was removed from the lab's guest and host allow rules. The temporary Ubuntu-only update proxy was stopped and its script removed.
+
+Re-tested all three FIM operations in manager and indexed alerts; the observed repeat-test times were 9.83, 10.76, and 10.77 seconds. All 13 existing media container identities were unchanged, nine HTTP endpoint checks ended at 200 after redirects, and the four central Wazuh services were active. Runtime network probes confirmed event forwarding worked while enrollment, host administration, selected media access, and public HTTPS access failed as expected.
+
+The lab's Wazuh package/CVE inventory fell from 3,335 to 440 records after synchronization. Remaining records concern the current repository-candidate kernel and include two Critical and 111 High ratings. The two Critical findings were reviewed against Ubuntu advisories and current guest usage; they remain documented, with no suppression or vulnerability-free claim. One SQLite update is deferred by Ubuntu's phased rollout. Backup work remains deferred pending storage; existing backup settings were preserved.
+
 ### Watched movie cleanup
 
 Removed three fully watched movies following an owner-requested storage cleanup. Jellyfin had one active profile. Immediately before deletion, each selected movie was marked played, had no resume position, was not favorited, and was absent from active playback sessions. Each library file had one filesystem link. No matching download jobs or residual download copies were found.
