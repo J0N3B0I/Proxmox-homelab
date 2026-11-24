@@ -6,6 +6,10 @@ A self-hosted media and monitoring lab built on Proxmox VE. Jellyfin serves the 
 
 Read the [November 2026 engineering report](reports/2026-11-11/README.md) for the architecture, migration history, dashboard improvements, maintenance results, and backup capacity findings. The report includes a six-page PDF and its editable source.
 
+## Security monitoring project
+
+The [Wazuh Security Monitoring Homelab](https://github.com/J0N3B0I/Wazuh-Homelab) documents the deployed monitoring architecture, agent collection, alert processing, indexing, investigation, operations, and a verified health snapshot. It includes a roadmap for controlled security exercises.
+
 ## Architecture
 
 ```mermaid
